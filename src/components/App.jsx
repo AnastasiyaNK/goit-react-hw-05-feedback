@@ -1,42 +1,36 @@
-import { useState } from 'react';
 import { Statistics } from './Statistics/Statistics';
 import { Section } from './Section/Section';
 import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
 import css from './FeedbackOptions/FeedbackOptions.module.css';
 import { Notification } from './Notification/Notification';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBad, setGood, setNeutral } from './redux/FeedbackSlice';
 
 export const App = () => {
-  const [good, setGood] = useState(0);
-  const [neutral, setNeutral] = useState(0);
-  const [bad, setBad] = useState(0);
+  const good = useSelector(state => state.feedBack.good);
+  const neutral = useSelector(state => state.feedBack.neutral);
+  const bad = useSelector(state => state.feedBack.bad);
+  const dispatsh = useDispatch();
 
   const handleClickFeedback = option => {
     switch (option) {
       case 'good':
-        setGood(good + 1);
+        dispatsh(setGood(good + 1));
+
         break;
 
       case 'neutral':
-        setNeutral(neutral + 1);
+        dispatsh(setNeutral(neutral + 1));
+
         break;
 
       case 'bad':
-        setBad(good + 1);
+        dispatsh(setBad(good + 1));
         break;
 
       default:
         return;
     }
-    // if (option === 'good') {
-    //   setGood(good +1);
-    // }
-    // if (option === 'neutral') {
-    //   setNeutral(good + 1);
-    // }
-    // if (option === 'bad') {
-    //   setBad(good + 1);
-    // }
-    // this.setState(prevSttate => ({ [option]: prevSttate[option] + 1 }));
   };
 
   const countTotalFeedback = () => {
